@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KICKOFF | 축구·풋살 전문 스토어</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- 상단 헤더 -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="logo" id="logoBtn">KICK<span>OFF</span></a>
+      
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="축구공, 풋살공, 사이즈 검색..." aria-label="상품 검색" />
+        <button type="button" id="searchBtn">검색</button>
+      </div>
+
+      <div class="user-actions">
+        <span id="userStatusText" class="user-badge">비회원</span>
+        <button type="button" class="btn-outline" id="openAuthModalBtn">로그인 / 가입</button>
+        <button type="button" class="btn-outline hidden" id="openMyPageBtn">마이페이지</button>
+        <button type="button" class="btn-outline hidden" id="logoutBtn">로그아웃</button>
+        <button type="button" class="btn-primary" id="openCartBtn">
+          장바구니 <span id="cartCount" class="badge">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 분류 내비게이션 -->
+    <nav class="main-nav" aria-label="상품 분류">
+      <div class="container nav-inner">
+        <button type="button" class="nav-btn active" data-category="전체">전체상품</button>
+        <button type="button" class="nav-btn" data-category="시합구">시합구</button>
+        <button type="button" class="nav-btn" data-category="훈련구">훈련구</button>
+        <button type="button" class="nav-btn" data-category="풋살공">풋살공</button>
+        <button type="button" class="nav-btn" data-category="유소년볼">유소년볼</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main id="home">
+    <!-- 6초 간격 4장 교차 슬라이드 -->
+    <section class="hero-section" aria-label="프로모션 슬라이드">
+      <div class="slider-wrapper">
+        <div class="slides" id="heroSlides">
+          <div class="slide active">
+            <img src="./img/slide1.png" alt="프로 매치볼 컬렉션" />
+          </div>
+          <div class="slide">
+            <img src="./img/slide2.png" alt="KFA 공인 풋살공 라인업" />
+          </div>
+          <div class="slide">
+            <img src="./img/slide3.png" alt="신규 가입 3,000P 및 등급별 최대 7% 적립" />
+          </div>
+          <div class="slide">
+            <img src="./img/slide4.png" alt="팀 트레이닝 & 유소년 경량볼" />
+          </div>
+        </div>
+        <button type="button" class="slide-arrow prev" id="prevSlideBtn" aria-label="이전 슬라이드">&#10094;</button>
+        <button type="button" class="slide-arrow next" id="nextSlideBtn" aria-label="다음 슬라이드">&#10095;</button>
+        <div class="slide-dots" id="slideDots">
+          <button type="button" class="dot active" data-index="0" aria-label="1번 슬라이드"></button>
+          <button type="button" class="dot" data-index="1" aria-label="2번 슬라이드"></button>
+          <button type="button" class="dot" data-index="2" aria-label="3번 슬라이드"></button>
+          <button type="button" class="dot" data-index="3" aria-label="4번 슬라이드"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 상품 목록 섹션 -->
+    <section class="products-section container">
+      <div class="section-header">
+        <div>
+          <h2 id="currentCategoryTitle">전체상품</h2>
+          <p class="section-sub">그라운드와 풋살장을 지배하는 정품 매치·트레이닝 볼</p>
+        </div>
+        <span id="productCountText" class="count-text">총 8개 상품</span>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- JS로 상품 카드 렌더링 -->
+      </div>
+    </section>
+
+    <!-- 회원 등급 혜택 안내 섹션 -->
+    <section class="tier-section container">
+      <div class="section-header">
+        <h2>KICKOFF 멤버십 등급 &amp; 적립 안내</h2>
+        <p class="section-sub">신규 회원가입 시 즉시 3,000P 지급 · 누적 구매액 기준 4단계 적립</p>
+      </div>
+      <div class="tier-grid" id="tierGrid">
+        <!-- JS로 등급 데이터 렌더링 -->
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>KICKOFF</strong>
+        <p>10~30대 축구·풋살 플레이어를 위한 전문 볼 스토어</p>
+      </div>
+      <div class="footer-info">
+        <p>고객센터: 1588-0000 (평일 10:00 ~ 18:00)</p>
+        <p>&copy; 2026 KICKOFF. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 1. 상품 상세 모달 -->
+  <div class="modal-backdrop hidden" id="productDetailModal">
+    <div class="modal-box detail-modal">
+      <button type="button" class="modal-close" data-close="productDetailModal">&times;</button>
+      <div id="productDetailContent" class="detail-body"></div>
+    </div>
+  </div>
+
+  <!-- 2. 로그인 / 회원가입 모달 -->
+  <div class="modal-backdrop hidden" id="authModal">
+    <div class="modal-box auth-modal">
+      <button type="button" class="modal-close" data-close="authModal">&times;</button>
+      <div class="tab-header">
+        <button type="button" class="tab-btn active" data-tab="loginTab">로그인</button>
+        <button type="button" class="tab-btn" data-tab="signupTab">회원가입 (+3,000P)</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <label>아이디
+          <input type="text" id="loginId" required placeholder="아이디 입력" />
+        </label>
+        <label>비밀번호
+          <input type="password" id="loginPw" required placeholder="비밀번호 입력" />
+        </label>
+        <button type="submit" class="btn-primary full-width">로그인</button>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden">
+        <label>이름
+          <input type="text" id="signupName" required placeholder="홍길동" />
+        </label>
+        <label>아이디
+          <input type="text" id="signupId" required placeholder="사용할 아이디" />
+        </label>
+        <label>비밀번호
+          <input type="password" id="signupPw" required placeholder="비밀번호" />
+        </label>
+        <p class="form-hint">* 가입 즉시 <strong>3,000P</strong>가 지급되며 루키(1% 적립) 등급으로 시작합니다.</p>
+        <button type="submit" class="btn-primary full-width">가입하고 3,000P 받기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. 장바구니 & 체험 결제 모달 -->
+  <div class="modal-backdrop hidden" id="cartModal">
+    <div class="modal-box cart-modal">
+      <button type="button" class="modal-close" data-close="cartModal">&times;</button>
+      <h3>장바구니</h3>
+      <div id="cartItemsContainer" class="cart-list"></div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>상품 합계</span>
+          <strong id="cartSubtotal">0원</strong>
+        </div>
+        <div class="summary-row point-use-row">
+          <label for="usePointInput">포인트 사용 (보유: <span id="availablePoints">0</span>P)</label>
+          <input type="number" id="usePointInput" min="0" step="100" value="0" />
+        </div>
+        <div class="summary-row total">
+          <span>최종 결제 예정금액</span>
+          <strong id="cartFinalTotal">0원</strong>
+        </div>
+        <div class="summary-row earn">
+          <span>예상 적립 포인트 (<span id="earnRateText">비회원 0%</span>)</span>
+          <span id="expectedEarnPoints">0P</span>
+        </div>
+        <button type="button" class="btn-primary full-width" id="checkoutBtn">체험 결제하기 (주문 내역 저장)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 마이페이지 모달 -->
+  <div class="modal-backdrop hidden" id="myPageModal">
+    <div class="modal-box mypage-modal">
+      <button type="button" class="modal-close" data-close="myPageModal">&times;</button>
+      <h3>마이페이지</h3>
+      <div id="myPageProfile" class="profile-card"></div>
+      <h4 class="order-history-title">체험 결제 주문 내역</h4>
+      <div id="orderHistoryList" class="order-list"></div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
